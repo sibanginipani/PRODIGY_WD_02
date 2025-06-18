@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StopWatch</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(to bottom, #d067c2, #523a4ddd);
+        }
+        .btn{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            gap: 10px;
+        }
+        button{
+            padding: 20px 40px;
+            margin: 5px;
+            border: none;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 25px;
+            background-color: rgba(83, 83, 83, 0.842);
+            color: white;
+            box-shadow: 0 0 10px rgba(127, 171, 227, 0.838);
+        }
+        #StopWatch{
+            color: white;
+            margin-bottom: 20px;
+            font-size: 90px;
+        }
+        button:hover{
+            background-color: rgba(146, 146, 255, 0.94);
+        }
+    </style>
+</head>
+<body>
+        <div id="StopWatch">00:00:00</div>
+        <div class="btn">
+        <button id="startbtn">Start</button>
+        <button id="stopbtn">Stop</button>
+        <button id="resetbtn">Reset</button>
+        </div>
+    </div>
+</body>
+<script>
+        let time = 0;
+        let running = false;
+        let interval;
+        const stopwatch = document.getElementById("StopWatch");
+        const startBtn = document.getElementById("startbtn");
+        const stopBtn = document.getElementById("stopbtn");
+        const resetBtn = document.getElementById("resetbtn");
+
+        function updateTime() {
+            time++;
+            let minutes = Math.floor(time / 6000);
+            let seconds = Math.floor((time % 6000) / 100);
+            let milliseconds = time % 100;
+            if (minutes < 10) minutes = "0" + minutes;
+            if (seconds < 10) seconds = "0" + seconds;
+            if (milliseconds < 10) milliseconds = "0" + milliseconds;
+            stopwatch.textContent = minutes + ":" + seconds + ":" + milliseconds;
+        }
+
+        startBtn.addEventListener("click", function() {
+            if (!running) {
+                interval = setInterval(updateTime, 10);
+                running = true;
+            }
+        });
+
+        stopBtn.addEventListener("click", function() {
+            if (running) {
+                clearInterval(interval);
+                running = false;
+            }
+        });
+
+        resetBtn.addEventListener("click", function() {
+            clearInterval(interval);
+            running = false;
+            time = 0;
+            stopwatch.textContent = "00:00:00";
+        });
+</script>
+</html>
